@@ -1,7 +1,8 @@
 import {IsBoolean, IsString} from 'class-validator';
 import * as typeorm from 'typeorm';
 
-import {User} from '../../users/user.entity';
+import {GameWorldPerUser} from '../../game-worlds/model/game-world-per-user.model';
+import {User} from '../../users/user.model';
 
 export class DatabaseConfig {
 	@IsString()
@@ -26,6 +27,6 @@ export class DatabaseConfig {
 	public synchronize: boolean;
 
 	public get entities(): object[] {
-		return [User];
+		return [User, GameWorldPerUser];
 	}
 }

@@ -7,6 +7,7 @@ import {AppService} from './app.service';
 import {AuthModule} from './auth/auth.module';
 import {DatabaseConfig} from './config/model/database.config';
 import {SecurityConfigModule} from './config/security-config.module';
+import {GameWorldsModule} from './game-worlds/game-worlds.module';
 import {UsersModule} from './users/users.module';
 
 @Module({
@@ -24,6 +25,7 @@ import {UsersModule} from './users/users.module';
 				return databaseConfiguration as TypeOrmModuleOptions;
 			},
 		}),
+		GameWorldsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

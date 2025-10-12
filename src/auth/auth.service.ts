@@ -6,7 +6,7 @@ import {
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import {User} from '../users/user.entity';
+import {User} from '../users/user.model';
 import {UsersService} from '../users/users.service';
 
 import {TokenContent, TokenResponse} from './types';
