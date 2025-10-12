@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import {User} from '../users/user.entity';
 import {UsersService} from '../users/users.service';
 
-import {TokenResponse} from './types';
+import {TokenContent, TokenResponse} from './types';
 @Injectable()
 export class AuthService {
 	constructor(
@@ -44,7 +44,7 @@ export class AuthService {
 			throw new UnauthorizedException('Invalid credentials');
 		}
 
-		const token = this.jwtService.sign({id: user.id});
+		const token = this.jwtService.sign({userId: user.id} as TokenContent);
 		return {access_token: token};
 	}
 }
