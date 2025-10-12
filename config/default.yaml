@@ -1,0 +1,21 @@
+database:
+  type: 'sqlite'
+  host: ''
+  port: ''
+  username: ''
+  password: ''
+  database: 'auth.db'
+  synchronize: true
+jwt:
+  secret: 'secret_code'
+  expiresIn: 3600
+  ignoreExpiration: true
+
+runtime:
+  gameWorlds:
+    - id: 'first'
+      loginURL: '[::1]:3000/auth/login'
+      publicURL: 'aaaa.game'
+    - id: 'second'
+      loginURL: '[::1]:3001/auth/login'
+      publicURL: 'bbb.game'

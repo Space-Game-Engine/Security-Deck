@@ -1,25 +1,31 @@
 import {Module} from '@nestjs/common';
-import {TypeOrmModule} from '@nestjs/typeorm';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import {TypeOrmModule, TypeOrmModuleOptions} from '@nestjs/typeorm';
 
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {AuthModule} from './auth/auth.module';
-import {User} from './users/user.entity';
+import {DatabaseConfig} from './config/model/database.config';
+import {SecurityConfigModule} from './config/security-config.module';
+import {GameWorldsModule} from './game-worlds/game-worlds.module';
 import {UsersModule} from './users/users.module';
 
 @Module({
 	imports: [
 		AuthModule,
 		UsersModule,
+		SecurityConfigModule,
 		TypeOrmModule.forRootAsync({
-			useFactory: () => ({
-				type: 'sqlite',
-				database: 'auth.db',
-				synchronize: true,
-				autoLoadEntities: true,
-				entities: [User],
-			}),
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => {
+				const databaseConfiguration =
+					configService.get<DatabaseConfig>('database');
+
+				return databaseConfiguration as TypeOrmModuleOptions;
+			},
 		}),
+		GameWorldsModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

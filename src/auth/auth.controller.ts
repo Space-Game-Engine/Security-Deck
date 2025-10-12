@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Post, Request} from '@nestjs/common';
 
-import {User} from '../users/user.entity';
+import {User} from '../users/user.model';
 
 import {AuthService} from './auth.service';
 import {Public} from './decorator/public-path.decorator';
@@ -15,7 +15,7 @@ export class AuthController {
 	public async register(
 		@Body('username') username: string,
 		@Body('password') password: string,
-	): Promise<Omit<User, 'password'>> {
+	): Promise<Pick<User, 'id' | 'username'>> {
 		const registeredUser = await this.authService.register(username, password);
 
 		return {
