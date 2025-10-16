@@ -8,6 +8,7 @@ import {UsersModule} from '../users/users.module';
 import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
 import {JWTAuthGuard} from './guard/jwt.guard';
+import {JwtService} from './jwt.service';
 
 @Module({
 	imports: [
@@ -28,6 +29,7 @@ import {JWTAuthGuard} from './guard/jwt.guard';
 	controllers: [AuthController],
 	providers: [
 		AuthService,
+		JwtService,
 		JWTAuthGuard,
 		{
 			provide: APP_GUARD,
