@@ -1,6 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {JwtService as NestJwtService} from '@nestjs/jwt';
+import {ExtractJwt} from 'passport-jwt';
 
 import {TokenContent, TokenResponse} from './types';
 
@@ -19,5 +20,11 @@ export class JwtService {
 
 	public sign(userId: number): TokenResponse {
 		return {access_token: this.nestJwtService.sign({userId} as TokenContent)};
+	}
+
+	public decode(request: Request): TokenContent | undefined {
+		const extractJwt = ExtractJwt.fromAuthHeaderAsBearerToken();
+
+		return this.nestJwtService.decode(extractJwt(request) ?? '');
 	}
 }
