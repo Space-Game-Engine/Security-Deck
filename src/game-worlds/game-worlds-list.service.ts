@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 
+import {GameWorldDefinition} from '../config/model/game-world-definition.config';
 import {RuntimeConfig} from '../config/runtime.config';
 
 import {GameWorldPerUser} from './model/game-world-per-user.model';
@@ -24,10 +25,16 @@ export class GameWorldsListService {
 		});
 	}
 
+	public getWorldById(worldId: string): GameWorldDefinition | undefined {
+		return this.runtimeConfig.gameWorlds.find(
+			worldDetails => worldDetails.id === worldId,
+		);
+	}
+
 	public async getUserWorlds(userId: number): Promise<UserGameWorldsList> {
 		const allWorlds = this.getAllWorlds();
 		const userWorlds = await this.gameWorldPerUserRepository.findBy({
-			user: {id: userId},
+			userId: userId,
 		});
 
 		return userWorlds
