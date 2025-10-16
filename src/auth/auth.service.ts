@@ -3,13 +3,13 @@ import {
 	Injectable,
 	UnauthorizedException,
 } from '@nestjs/common';
-import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import {User} from '../users/user.model';
 import {UsersService} from '../users/users.service';
 
-import {TokenContent, TokenResponse} from './types';
+import {JwtService} from './jwt.service';
+import {TokenResponse} from './types';
 @Injectable()
 export class AuthService {
 	constructor(
@@ -44,7 +44,10 @@ export class AuthService {
 			throw new UnauthorizedException('Invalid credentials');
 		}
 
-		const token = this.jwtService.sign({userId: user.id} as TokenContent);
-		return {access_token: token};
+		return this.jwtService.sign(user.id);
+	}
+
+	public refreshToken(userId: number): TokenResponse {
+		return this.jwtService.sign(userId);
 	}
 }

@@ -37,4 +37,9 @@ export class AuthController {
 	public getProfile(@Request() req): types.TokenContent {
 		return req.user;
 	}
+
+	@Get('refreshToken')
+	public refreshToken(@Request() req): types.TokenResponse {
+		return this.authService.refreshToken(req.user.userId);
+	}
 }
