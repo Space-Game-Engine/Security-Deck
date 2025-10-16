@@ -14,8 +14,11 @@ export class GameWorldPerUser {
 	public id: number;
 
 	@ManyToOne(() => User, user => user.gameWorlds)
-	@JoinColumn()
+	@JoinColumn({name: 'userId'})
 	public user: User;
+
+	@Column()
+	public userId: number;
 
 	@Column()
 	public habitatId: number;

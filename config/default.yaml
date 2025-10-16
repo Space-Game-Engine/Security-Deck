@@ -14,8 +14,9 @@ jwt:
 runtime:
   gameWorlds:
     - id: 'first'
-      loginURL: '[::1]:3000/auth/login'
-      publicURL: 'aaaa.game'
+      internalURL: 'http://[::1]:3000'
+      publicURL: 'http://aaaa.game'
+      authKey: 'secret_header_token'
     - id: 'second'
-      loginURL: '[::1]:3001/auth/login'
-      publicURL: 'bbb.game'
+      internalURL: 'http://[::1]:3001'
+      publicURL: 'http://bbb.game'
