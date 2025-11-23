@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {Repository, ILike} from 'typeorm';
 
 import {User} from './user.model';
 
@@ -16,6 +16,6 @@ export class UsersService {
 	}
 
 	public async findByUsername(username: string): Promise<User | null> {
-		return this.userRepository.findOne({where: {username}});
+		return this.userRepository.findOne({where: {username: ILike(username)}});
 	}
 }

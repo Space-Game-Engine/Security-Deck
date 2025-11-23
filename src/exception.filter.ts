@@ -10,11 +10,14 @@ import {Request, Response} from 'express';
 @Catch(Error)
 export class HttpExceptionFilter implements ExceptionFilter {
 	private readonly logger = new Logger(HttpExceptionFilter.name);
-	public catch(exception: Error, host: ArgumentsHost): void {
+	public catch(
+		exception: Error & {status?: number},
+		host: ArgumentsHost,
+	): void {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
 		const request = ctx.getRequest<Request>();
-		const status = HttpStatus.INTERNAL_SERVER_ERROR;
+		const status = exception.status ?? HttpStatus.INTERNAL_SERVER_ERROR;
 
 		this.logger.error(exception);
 
